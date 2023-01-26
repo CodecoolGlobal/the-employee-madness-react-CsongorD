@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Pagination } from "react-pagination-bar";
+import "react-pagination-bar/dist/index.css";
 import "./EmployeeTable.css";
 
 const EmployeeTable = ({ employees, onDelete }) => {
@@ -8,12 +10,14 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const [nameToggle, setNameToggle] = useState(true);
   const [levelToggle, setLevelToggle] = useState(true);
   const [positionToggle, setPositionToggle] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pagePostsLimit = 10;
+
   let filteredEmployees = employeeData.filter((employee) =>
     employee.position.includes(value) || employee.level.includes(value)
       ? employee
       : 0
   );
-
   const updatePresent = (employee) => {
     return fetch(`/api/employees/${employee._id}`, {
       method: "PATCH",
@@ -24,7 +28,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
     }).then((res) => res.json());
   };
 
-  function nameArranger(name, level, position) {
+  function Arranger(name, level, position) {
     if (name) {
       nameToggle
         ? setEmployeeData(employees.sort((a, b) => (a.name > b.name ? 1 : -1)))
@@ -64,7 +68,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
               <button
                 onClick={() => {
                   setNameToggle(nameToggle ? false : true);
-                  nameArranger(true, false, false);
+                  Arranger(true, false, false);
                 }}
               >
                 Name
@@ -74,7 +78,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
               <button
                 onClick={() => {
                   setLevelToggle(levelToggle ? false : true);
-                  nameArranger(false, true, false);
+                  Arranger(false, true, false);
                 }}
               >
                 Level
@@ -84,7 +88,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
               <button
                 onClick={() => {
                   setPositionToggle(positionToggle ? false : true);
-                  nameArranger(false, false, true);
+                  Arranger(false, false, true);
                 }}
               >
                 Postition
@@ -95,41 +99,53 @@ const EmployeeTable = ({ employees, onDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredEmployees.map((employee) => (
-            <tr key={employee._id}>
-              <td>{employee.name}</td>
-              <td>{employee.level}</td>
-              <td>{employee.position}</td>
-              <td>
-                {employee.present ? (
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    onChange={() => {
-                      updatePresent(employee);
-                    }}
-                  />
-                ) : (
-                  <input
-                    type="checkbox"
-                    onChange={() => {
-                      updatePresent(employee);
-                    }}
-                  />
-                )}
-              </td>
-              <td>
-                <Link to={`/update/${employee._id}`}>
-                  <button type="button">Update</button>
-                </Link>
-                <button type="button" onClick={() => onDelete(employee._id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+          {filteredEmployees
+            .slice(
+              (currentPage - 1) * pagePostsLimit,
+              currentPage * pagePostsLimit
+            )
+            .map((employee, index) => (
+              <tr key={employee._id}>
+                <td>{employee.name}</td>
+                <td>{employee.level}</td>
+                <td>{employee.position}</td>
+                <td>
+                  {employee.present ? (
+                    <input
+                      type="checkbox"
+                      defaultChecked
+                      onChange={() => {
+                        updatePresent(employee);
+                      }}
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        updatePresent(employee);
+                      }}
+                    />
+                  )}
+                </td>
+                <td>
+                  <Link to={`/update/${employee._id}`}>
+                    <button type="button">Update</button>
+                  </Link>
+                  <button type="button" onClick={() => onDelete(employee._id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={pagePostsLimit}
+        onPageChange={(pageNumber) => setCurrentPage(pageNumber)}
+        totalItems={filteredEmployees.length}
+        pageNeighbours={2}
+      />
     </div>
   );
 };
