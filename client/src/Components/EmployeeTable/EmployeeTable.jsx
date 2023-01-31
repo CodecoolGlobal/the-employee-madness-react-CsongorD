@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Pagination } from "react-pagination-bar";
 import "react-pagination-bar/dist/index.css";
@@ -12,6 +12,10 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const [positionToggle, setPositionToggle] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const pagePostsLimit = 10;
+
+  useEffect(() => {
+    setEmployeeData(employees);
+  }, [employees]);
 
   let filteredEmployees = employeeData.filter((employee) =>
     employee.position.includes(value) || employee.level.includes(value)
@@ -128,7 +132,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
                   )}
                 </td>
                 <td>
-                  <Link to={`/update/${employee._id}`}>
+                  <Link to={`/updateEmployee/${employee._id}`}>
                     <button type="button">Update</button>
                   </Link>
                   <button type="button" onClick={() => onDelete(employee._id)}>

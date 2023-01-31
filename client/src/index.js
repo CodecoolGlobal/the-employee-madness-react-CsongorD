@@ -11,27 +11,44 @@ import EmployeeUpdater from "./Pages/EmployeeUpdater";
 import Robert from "./Pages/Robert";
 import Missing from "./Pages/Missing";
 
+import EquipmentList from "./Pages/EquipmentList";
+import EquipmentUpdater from "./Pages/EquipmentUpdater";
+import EquipmentCreator from "./Pages/EquipmentCreator";
+
 import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <Layout name="Employee" i="1" />,
     errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
-        element: <EmployeeList />,
+        element: (
+          <>
+            <EmployeeList />
+            <Layout name="Equipment" />
+            <EquipmentList />
+          </>
+        ),
       },
       {
-        path: "/create",
+        path: "/createEmployee",
         element: <EmployeeCreator />,
       },
       {
-        path: "/update/:id",
+        path: "/createEquipment",
+        element: <EquipmentCreator />,
+      },
+      {
+        path: "/updateEmployee/:id",
         element: <EmployeeUpdater />,
+      },
+      {
+        path: "/updateEquipment/:id",
+        element: <EquipmentUpdater />,
       },
       {
         path: "/table-test",
