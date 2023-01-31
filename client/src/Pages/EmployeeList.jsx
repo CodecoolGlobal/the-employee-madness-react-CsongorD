@@ -17,22 +17,17 @@ const EmployeeList = () => {
   const [data, setData] = useState(null);
 
   const handleDelete = (id) => {
-    deleteEmployee(id).catch((err) => {
-      console.log(err);
-    });
-
+    deleteEmployee(id).catch((err) => console.log(err));
     setData((employees) => {
       return employees.filter((employee) => employee._id !== id);
     });
   };
-
   useEffect(() => {
     const controller = new AbortController();
-
     fetchEmployees(controller.signal)
-      .then((employees) => {
+      .then((employee) => {
         setLoading(false);
-        setData(employees);
+        setData(employee);
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
@@ -47,7 +42,6 @@ const EmployeeList = () => {
   if (loading) {
     return <Loading />;
   }
-
   return <EmployeeTable employees={data} onDelete={handleDelete} />;
 };
 
