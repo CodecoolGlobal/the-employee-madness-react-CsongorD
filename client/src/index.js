@@ -21,7 +21,7 @@ import FormTest from "./Pages/FormTest";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout name="Employee" i="1" />,
+    element: <Layout name="Employee"/>,
     errorElement: <ErrorPage />,
     children: [
       {

@@ -22,7 +22,7 @@ router.use("/:id", async (req, res, next) => {
 router
   .route("/")
   .get(async (req, res) => {
-    const equipments = await EquipmentModel.find().sort({ created: "desc" });
+    const equipments = await EquipmentModel.find().sort({ created: "desc" }).lean();
     return res.json(equipments);
   })
   .post(async (req, res, next) => {

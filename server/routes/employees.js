@@ -22,7 +22,7 @@ router.use("/:id", async (req, res, next) => {
 router
   .route("/")
   .get(async (req, res) => {
-    const employees = await EmployeeModel.find().sort({ created: "desc" });
+    const employees = await EmployeeModel.find().sort({ created: "desc" }).lean();
     return res.json(employees);
   })
   .post(async (req, res, next) => {
