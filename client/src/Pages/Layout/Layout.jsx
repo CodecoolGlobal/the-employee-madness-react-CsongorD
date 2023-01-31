@@ -2,9 +2,9 @@ import { Outlet, Link } from "react-router-dom";
 
 import "./Layout.css";
 
-const Layout = ({ name, i }) => {
+const Layout = ({ name }) => {
   return (
-    <div className="Layout" id={i}>
+    <div className="Layout">
       <nav>
         <ul>
           <li className="grow">
