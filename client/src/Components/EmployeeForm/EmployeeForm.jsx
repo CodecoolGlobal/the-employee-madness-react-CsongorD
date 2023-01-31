@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
 const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
   const onSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +15,21 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
     return onSave(employee);
   };
 
+  const [equipmentNames, setEquipmentNames] = useState(null);
+  async function fetchData() {
+    const response = await fetch("/api/equipments/");
+    const data = await response.json();
+    const arr = data.map((x) => {
+      return { value: x.Eq_name, label: x.Eq_name };
+    });
+    setEquipmentNames(arr);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const namesArr = equipmentNames ? equipmentNames : null;
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       {employee && (
@@ -44,6 +61,11 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
           name="position"
           id="position"
         />
+      </div>
+
+      <div className="control">
+        <label htmlFor="equipment">Equipment:</label>
+        <Select options={namesArr} name="equipment" />
       </div>
 
       <div className="buttons">

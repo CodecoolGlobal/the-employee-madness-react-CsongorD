@@ -29,6 +29,7 @@ const populateEmployees = async () => {
     level: pick(levels),
     position: pick(positions),
     present: pick(booleans),
+    equipment: "",
   }));
   await EmployeeModel.create(...employees);
   console.log("Employees created");
