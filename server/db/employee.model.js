@@ -14,6 +14,10 @@ const EmployeeSchema = new Schema({
   present: Boolean,
   equipment: String,
   salary: Number,
+  starting_date: String,
+  current_salary: Number,
+  favourite_color: String,
+  desired_salary: Number,
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
