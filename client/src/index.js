@@ -15,13 +15,15 @@ import EquipmentList from "./Pages/EquipmentList";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
 import EquipmentCreator from "./Pages/EquipmentCreator";
 
+import Toppaid from "./Pages/Toppaid";
+
 import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout name="Employee"/>,
+    element: <Layout name="Employee" />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -66,6 +68,7 @@ const router = createBrowserRouter([
         path: "/missing",
         element: <Missing />,
       },
+      { path: "/top-paid", element: <Toppaid /> },
     ],
   },
 ]);

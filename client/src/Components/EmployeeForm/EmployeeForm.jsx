@@ -67,6 +67,14 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
         <label htmlFor="equipment">Equipment:</label>
         <Select options={namesArr} name="equipment" />
       </div>
+      <div className="control">
+        <label htmlFor="salary">Salary:</label>
+        <input
+          defaultValue={employee ? employee.salary : null}
+          name="salary"
+          id="salary"
+        />
+      </div>
 
       <div className="buttons">
         <button type="submit" disabled={disabled}>

@@ -13,6 +13,7 @@ const EmployeeSchema = new Schema({
   },
   present: Boolean,
   equipment: String,
+  salary: Number,
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
