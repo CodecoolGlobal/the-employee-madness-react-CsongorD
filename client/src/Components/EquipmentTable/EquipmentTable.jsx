@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Pagination } from "react-pagination-bar";
 import "react-pagination-bar/dist/index.css";
 import "./EquipmentTable.css";
+import React from "react";
+import Popup from "reactjs-popup";
+import DeletePopup from "../DeletePopup";
 
 const EquipmentTable = ({ equipment, onDelete }) => {
   const [equipmentData, setEquipmentData] = useState(equipment);
@@ -108,9 +111,22 @@ const EquipmentTable = ({ equipment, onDelete }) => {
                   <Link to={`/updateEquipment/${equipment._id}`}>
                     <button type="button">Update</button>
                   </Link>
-                  <button type="button" onClick={() => onDelete(equipment._id)}>
-                    Delete
-                  </button>
+                  <Popup
+                    trigger={<button type="button">Delete</button>}
+                    modal={true}
+                    position="top center"
+                  >
+                    {(close) => (
+                      <div>
+                        <DeletePopup
+                          onDelete={onDelete}
+                          id={equipment._id}
+                          onClose={close}
+                          name="Equipment"
+                        />
+                      </div>
+                    )}
+                  </Popup>
                 </td>
               </tr>
             ))}
