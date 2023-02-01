@@ -103,6 +103,10 @@ const EmployeeTable = ({ employees, onDelete }) => {
             </th>
             <th>Present</th>
             <th>Equipment</th>
+            <th>Starting Date</th>
+            <th>Salary</th>
+            <th>Desired Salary</th>
+            <th>Favourite Color</th>
             <th />
           </tr>
         </thead>
@@ -135,7 +139,14 @@ const EmployeeTable = ({ employees, onDelete }) => {
                     />
                   )}
                 </td>
+
                 <td>{employee.equipment}</td>
+                <td>{employee.starting_date}</td>
+                <td>{employee.current_salary}</td>
+                <td>{employee.desired_salary}</td>
+                <td
+                  style={{ backgroundColor: `${employee.favourite_color}` }}
+                > </td>
                 <td>
                   <Link to={`/updateEmployee/${employee._id}`}>
                     <button type="button">Update</button>

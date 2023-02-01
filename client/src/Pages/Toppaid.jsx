@@ -29,7 +29,7 @@ const Toppaid = () => {
     const controller = new AbortController();
     fetchEmployees(controller.signal)
       .then((employees) => {
-        let employeesToppaid = employees.sort((a, b) => a.salary - b.salary);
+        let employeesToppaid = employees.sort((a, b) => a.current_salary - b.current_salary);
         console.log(employeesToppaid);
         setLoading(false);
         setData(employeesToppaid.splice(-3));

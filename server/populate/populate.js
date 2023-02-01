@@ -9,6 +9,8 @@ const positions = require("./positions.json");
 const booleans = require("./booleans.json");
 const eqnames = require("./eqnames.json");
 const eqtypes = require("./eqtypes.json");
+const dates = require("./dates.json");
+const colors = require("./colors.json");
 
 const EmployeeModel = require("../db/employee.model");
 const EquipmentModel = require("../db/equipment.model");
@@ -21,17 +23,25 @@ if (!mongoUrl) {
 }
 
 const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
+const randomSalary = () => Math.floor(Math.random() * (60 - 20 + 1) + 20);
 
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
-  const employees = names.map((name) => ({
-    name,
-    level: pick(levels),
-    position: pick(positions),
-    present: pick(booleans),
-    equipment: "",
-    salary:Math.floor(Math.random()*(60-20+1)+20),
-  }));
+  const employees = names.map((name) => {
+    let randomSalaryNum = randomSalary();
+    return {
+      name,
+      level: pick(levels),
+      position: pick(positions),
+      present: pick(booleans),
+      equipment: "",
+      starting_date: pick(dates),
+      current_salary: randomSalaryNum,
+      favourite_color: pick(colors),
+      desired_salary: randomSalaryNum + 10 <= 60 ? randomSalaryNum + 10 : 60,
+    };
+  });
+
   await EmployeeModel.create(...employees);
   console.log("Employees created");
 };

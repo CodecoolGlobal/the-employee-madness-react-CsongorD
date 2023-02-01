@@ -12,6 +12,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
       return acc;
     }, {});
 
+    console.log(employee);
     return onSave(employee);
   };
 
@@ -68,12 +69,28 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
         <Select options={namesArr} name="equipment" />
       </div>
       <div className="control">
-        <label htmlFor="salary">Salary:</label>
+        <label htmlFor="current_salary">Salary:</label>
         <input
-          defaultValue={employee ? employee.salary : null}
-          name="salary"
-          id="salary"
+          defaultValue={employee ? employee.current_salary : null}
+          name="current_salary"
+          id="current_salary"
         />
+      </div>
+      <div className="control">
+        <label htmlFor="desired_salary">Desired Salary:</label>
+        <input
+          defaultValue={employee ? employee.desired_salary : null}
+          name="desired_salary"
+          id="desired_salary"
+        />
+      </div>
+      <div className="control">
+        <label htmlFor="starting_date">Starting Date:</label>
+        <input type="date" name="starting_date" id="starting_date" />
+      </div>
+      <div className="control">
+        <label htmlFor="favourite_color">Favourite Color:</label>
+        <input type="color" name="favourite_color" id="favourite_color" />
       </div>
 
       <div className="buttons">
