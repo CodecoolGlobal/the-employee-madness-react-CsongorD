@@ -1,0 +1,13 @@
+.DeletePopup {
+  padding: 0.5rem;
+  background-color: rgb(3, 47, 66);
+  color: white;
+  width: 500px;
+  height: 190px;
+  text-align: center;
+  border: 1px white solid;
+}
+h1 {
+  padding-left: 10px;
+  padding-right: 10px;
+}

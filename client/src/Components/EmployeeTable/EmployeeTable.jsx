@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Pagination } from "react-pagination-bar";
 import "react-pagination-bar/dist/index.css";
 import "./EmployeeTable.css";
+import React from "react";
+import Popup from "reactjs-popup";
+import DeletePopup from "../DeletePopup";
 
 const EmployeeTable = ({ employees, onDelete }) => {
   const [employeeData, setEmployeeData] = useState(employees);
@@ -137,9 +140,22 @@ const EmployeeTable = ({ employees, onDelete }) => {
                   <Link to={`/updateEmployee/${employee._id}`}>
                     <button type="button">Update</button>
                   </Link>
-                  <button type="button" onClick={() => onDelete(employee._id)}>
-                    Delete
-                  </button>
+                  <Popup
+                    trigger={<button type="button">Delete</button>}
+                    modal={true}
+                    position="top center"
+                  >
+                    {(close) => (
+                      <div>
+                        <DeletePopup
+                          onDelete={onDelete}
+                          id={employee._id}
+                          onClose={close}
+                          name="Employee"
+                        />
+                      </div>
+                    )}
+                  </Popup>
                 </td>
               </tr>
             ))}
