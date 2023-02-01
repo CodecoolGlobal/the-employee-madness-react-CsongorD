@@ -30,6 +30,7 @@ const populateEmployees = async () => {
     position: pick(positions),
     present: pick(booleans),
     equipment: "",
+    salary:Math.floor(Math.random()*(60-20+1)+20),
   }));
   await EmployeeModel.create(...employees);
   console.log("Employees created");
