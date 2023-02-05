@@ -18,6 +18,7 @@ const EmployeeSchema = new Schema({
   current_salary: Number,
   favourite_color: String,
   desired_salary: Number,
+  division: { type: mongoose.Schema.Types.ObjectId, ref: "Division" },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

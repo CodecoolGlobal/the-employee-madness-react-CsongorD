@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const employeeRouter = require("./routes/employees");
 const equipmentRouter = require("./routes/equipments");
+const divisionRouter = require("./routes/divisions");
 
 const app = express();
 const { MONGO_URL, PORT = 8080 } = process.env;
@@ -15,6 +16,7 @@ if (!MONGO_URL) {
 app.use(express.json());
 app.use("/api/employees", employeeRouter);
 app.use("/api/equipments", equipmentRouter);
+app.use("/api/divisions/", divisionRouter);
 
 const main = async () => {
   await mongoose.connect(MONGO_URL);
