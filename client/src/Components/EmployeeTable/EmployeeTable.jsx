@@ -107,6 +107,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <th>Salary</th>
             <th>Desired Salary</th>
             <th>Favourite Color</th>
+            <th>Division</th>
             <th />
           </tr>
         </thead>
@@ -144,9 +145,10 @@ const EmployeeTable = ({ employees, onDelete }) => {
                 <td>{employee.starting_date}</td>
                 <td>{employee.current_salary}</td>
                 <td>{employee.desired_salary}</td>
-                <td
-                  style={{ backgroundColor: `${employee.favourite_color}` }}
-                > </td>
+                <td style={{ backgroundColor: `${employee.favourite_color}` }}>
+                  {" "}
+                </td>
+                <td>{employee.division}</td>
                 <td>
                   <Link to={`/updateEmployee/${employee._id}`}>
                     <button type="button">Update</button>
@@ -172,13 +174,6 @@ const EmployeeTable = ({ employees, onDelete }) => {
             ))}
         </tbody>
       </table>
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={pagePostsLimit}
-        onPageChange={(pageNumber) => setCurrentPage(pageNumber)}
-        totalItems={filteredEmployees.length}
-        pageNeighbours={2}
-      />
     </div>
   );
 };

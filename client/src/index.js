@@ -20,6 +20,9 @@ import Toppaid from "./Pages/Toppaid";
 import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
+import DivisionList from "./Pages/DivisionList";
+import DivisionCreator from "./Pages/DivisionCreator";
+import DivisionUpdater from "./Pages/DivisionUpdater";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +36,8 @@ const router = createBrowserRouter([
             <EmployeeList />
             <Layout name="Equipment" />
             <EquipmentList />
+            <Layout name="Division" />
+            <DivisionList />
           </>
         ),
       },
@@ -45,12 +50,20 @@ const router = createBrowserRouter([
         element: <EquipmentCreator />,
       },
       {
+        path: "/createDivision",
+        element: <DivisionCreator />,
+      },
+      {
         path: "/updateEmployee/:id",
         element: <EmployeeUpdater />,
       },
       {
         path: "/updateEquipment/:id",
         element: <EquipmentUpdater />,
+      },
+      {
+        path: "/updateDivision/:id",
+        element: <DivisionUpdater />,
       },
       {
         path: "/table-test",

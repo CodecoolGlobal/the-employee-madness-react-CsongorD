@@ -1,0 +1,43 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import DivisionForm from "../Components/DivisionForm";
+
+const createDivision = (division) => {
+  return fetch("/api/division", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(division),
+  }).then((res) => res.json());
+};
+
+const DivisionCreator = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleCreateDivision = (division) => {
+    setLoading(true);
+
+    createDivision(division)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        throw err;
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  return (
+    <DivisionForm
+      onCancel={() => navigate("/")}
+      disabled={loading}
+      onSave={handleCreateDivision}
+    />
+  );
+};
+
+export default DivisionCreator;

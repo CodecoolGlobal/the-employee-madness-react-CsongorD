@@ -11,8 +11,6 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
       acc[k] = v;
       return acc;
     }, {});
-
-    console.log(employee);
     return onSave(employee);
   };
 
