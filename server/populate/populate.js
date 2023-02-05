@@ -17,6 +17,7 @@ const cities = require("./cities.json");
 const EmployeeModel = require("../db/employee.model");
 const EquipmentModel = require("../db/equipment.model");
 const DivisionModel = require("../db/division.model");
+const ToolModel = require("../db/tool.model");
 
 const mongoUrl = process.env.MONGO_URL;
 
@@ -100,12 +101,25 @@ const populateDivision = async (EmployeeIds) => {
   await DivisionModel.create(...divisions);
   console.log("Divisions created");
 };
+
+const populateTools = async () => {
+  await ToolModel.deleteMany({});
+  await ToolModel.create([
+    { name: "Notebook", weight: 0.5 },
+    { name: "Pencil", weight: 0.06 },
+    { name: "Pen", weight: 0.12 },
+    { name: "Book", weight: 1 },
+  ]);
+  console.log("Tools created");
+};
+
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
   await populateDivision(await findEmployeesDivision());
   await populateEmployees();
   await populateEquipment();
+  await populateTools();
   await mongoose.disconnect();
 };
 
