@@ -14,7 +14,7 @@ const EquipmentTable = ({ equipment, onDelete }) => {
   const [typeToggle, setTypeToggle] = useState(true);
   const [amountToggle, setAmountToggle] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const pagePostsLimit = 10;
+  const pagePostsLimit = 5;
 
   useEffect(() => {
     setEquipmentData(equipment);

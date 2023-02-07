@@ -6,7 +6,10 @@ router.use("/:id", async (req, res, next) => {
   let division = null;
 
   try {
-    division = await DivisionModel.findById(req.params.id);
+    division = await DivisionModel.findById(req.params.id).populate([
+      "employees",
+      "boss",
+    ]);
   } catch (err) {
     return next(err);
   }
@@ -22,7 +25,10 @@ router.use("/:id", async (req, res, next) => {
 router
   .route("/")
   .get(async (req, res) => {
-    const divisions = await DivisionModel.find();
+    const divisions = await DivisionModel.find().populate([
+      "employees",
+      "boss",
+    ]);
     return res.json(divisions);
   })
   .post(async (req, res, next) => {

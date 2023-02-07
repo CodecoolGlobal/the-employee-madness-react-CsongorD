@@ -21,7 +21,7 @@ const ToolCreator = () => {
 
     createTool(tool)
       .then(() => {
-        navigate("/");
+        navigate("/tools");
       })
       .catch((err) => {
         throw err;
@@ -33,7 +33,7 @@ const ToolCreator = () => {
 
   return (
     <ToolForm
-      onCancel={() => navigate("/")}
+      onCancel={() => navigate("/tools")}
       disabled={loading}
       onSave={handleCreateTool}
     />

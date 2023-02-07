@@ -1,4 +1,5 @@
 const express = require("express");
+const DivisionModel = require("../db/division.model");
 const router = express.Router();
 const EmployeeModel = require("../db/employee.model");
 
@@ -22,16 +23,18 @@ router.use("/:id", async (req, res, next) => {
 router
   .route("/")
   .get(async (req, res) => {
-    const employees = await EmployeeModel.find()
-      .sort({ created: "desc" })
-      .lean();
+    const employees = await EmployeeModel.find();
+
     return res.json(employees);
   })
   .post(async (req, res, next) => {
     const employee = req.body;
-
     try {
       const saved = await EmployeeModel.create(employee);
+      await DivisionModel.findOneAndUpdate(
+        { _id: saved.division },
+        { $push: { employees: saved._id } }
+      );
       return res.json(saved);
     } catch (err) {
       return next(err);

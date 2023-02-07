@@ -14,7 +14,7 @@ const DivisionTable = ({ divisions, onDelete }) => {
   const [bossToggle, setBossToggle] = useState(true);
   const [budgetToggle, setBudgetToggle] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const pagePostsLimit = 10;
+  const pagePostsLimit = 5;
 
   useEffect(() => {
     setDivisionData(divisions);
@@ -98,7 +98,7 @@ const DivisionTable = ({ divisions, onDelete }) => {
             .map((division) => (
               <tr key={division._id}>
                 <td>{division.name}</td>
-                <td>{division.boss.name}</td>
+                <td>{division.boss?.name}</td>
                 <td>{division.budget}</td>
                 <td>
                   <Link to={`/updateDivision/${division._id}`}>

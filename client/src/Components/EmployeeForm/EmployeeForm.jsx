@@ -15,7 +15,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
   };
 
   const [equipmentNames, setEquipmentNames] = useState(null);
-  async function fetchData() {
+  async function fetchEquipments() {
     const response = await fetch("/api/equipments/");
     const data = await response.json();
     const arr = data.map((x) => {
@@ -23,12 +23,24 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
     });
     setEquipmentNames(arr);
   }
+  const [divisions, setDivisions] = useState(null);
+  async function fetchDivisions() {
+    const response = await fetch("/api/divisions/");
+    const data = await response.json();
+    const arr = data.map((x) => {
+      return { value: x._id, label: x.name };
+    });
+    setDivisions(arr);
+  }
 
   useEffect(() => {
-    fetchData();
+    fetchEquipments();
+    fetchDivisions();
   }, []);
 
   const namesArr = equipmentNames ? equipmentNames : null;
+  const divisionArr = divisions ? divisions : null;
+
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       {employee && (
@@ -84,11 +96,25 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
       </div>
       <div className="control">
         <label htmlFor="starting_date">Starting Date:</label>
-        <input type="date" name="starting_date" id="starting_date" />
+        <input
+          type="date"
+          name="starting_date"
+          id="starting_date"
+          defaultValue={employee ? employee.starting_date : null}
+        />
       </div>
       <div className="control">
         <label htmlFor="favourite_color">Favourite Color:</label>
-        <input type="color" name="favourite_color" id="favourite_color" />
+        <input
+          type="color"
+          defaultValue="#e66465"
+          name="favourite_color"
+          id="favourite_color"
+        />
+      </div>
+      <div className="control">
+        <label htmlFor="desired_salary">Division</label>
+        <Select options={divisionArr} name="division" />
       </div>
 
       <div className="buttons">
