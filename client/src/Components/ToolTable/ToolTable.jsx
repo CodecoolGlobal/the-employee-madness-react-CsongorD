@@ -13,7 +13,7 @@ const ToolTable = ({ tool, onDelete }) => {
   const [nameToggle, setNameToggle] = useState(true);
   const [weightToggle, setWeightToggle] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const pagePostsLimit = 10;
+  const pagePostsLimit = 5;
 
   useEffect(() => {
     setToolData(tool);

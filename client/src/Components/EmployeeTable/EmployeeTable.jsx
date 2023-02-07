@@ -14,7 +14,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const [levelToggle, setLevelToggle] = useState(true);
   const [positionToggle, setPositionToggle] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const pagePostsLimit = 10;
+  const pagePostsLimit = 5;
 
   useEffect(() => {
     setEmployeeData(employees);
@@ -148,7 +148,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
                 <td style={{ backgroundColor: `${employee.favourite_color}` }}>
                   {" "}
                 </td>
-                <td>{employee.division}</td>
+                <td>{employee.division?.name}</td>
                 <td>
                   <Link to={`/updateEmployee/${employee._id}`}>
                     <button type="button">Update</button>
@@ -174,6 +174,13 @@ const EmployeeTable = ({ employees, onDelete }) => {
             ))}
         </tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={pagePostsLimit}
+        onPageChange={(pageNumber) => setCurrentPage(pageNumber)}
+        totalItems={filteredEmployees.length}
+        pageNeighbours={2}
+      />
     </div>
   );
 };

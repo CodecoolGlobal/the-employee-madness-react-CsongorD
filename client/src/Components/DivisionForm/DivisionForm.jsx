@@ -8,21 +8,33 @@ const DivisionForm = ({ onSave, disabled, division, onCancel }) => {
 
     const division = entries.reduce((acc, entry) => {
       const [k, v] = entry;
-      acc[k] = v;
-      return acc;
+      let location = "location";
+      if (k === "city") {
+        acc[location] = { city: v };
+        return acc;
+      } else if (k === "country") {
+        acc[location][k] = v;
+        return acc;
+      } else {
+        acc[k] = v;
+        return acc;
+      }
     }, {});
-
     return onSave(division);
   };
 
   const [bossNames, setBossNames] = useState(null);
   async function fetchData() {
-    const response = await fetch("/api/divisions/");
+    const response = await fetch("/api/employees/");
     const data = await response.json();
-    const arr = data.map((x) => {
-      return { value: x.boss, label: x.boss.name };
+    const arr = data.filter((x) => (x.position === "Director" ? x : null));
+    const filteredArr = arr.map((x) => {
+      return {
+        value: x._id,
+        label: x.name,
+      };
     });
-    setBossNames(arr);
+    setBossNames(filteredArr);
   }
 
   useEffect(() => {
@@ -30,7 +42,6 @@ const DivisionForm = ({ onSave, disabled, division, onCancel }) => {
   }, []);
 
   const namesArr = bossNames ? bossNames : null;
-
   return (
     <form className="DivisionForm" onSubmit={onSubmit}>
       {division && (

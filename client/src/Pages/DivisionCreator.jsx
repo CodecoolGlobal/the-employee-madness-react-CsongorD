@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DivisionForm from "../Components/DivisionForm";
 
 const createDivision = (division) => {
-  return fetch("/api/division", {
+  return fetch("/api/divisions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

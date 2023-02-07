@@ -26,31 +26,13 @@ if (!mongoUrl) {
   process.exit(1); // exit the current program
 }
 
-async function findEmployeesDivision() {
-  let allEmployees = await EmployeeModel.find();
-  let allDivisions = await DivisionModel.find();
-  const mainArr = [];
-  for (let i = 0; i < allDivisions.length; i++) {
-    let arr = [];
-    for (let j = 0; j < allEmployees.length; j++) {
-      if (
-        allDivisions[i]._id.toString() === allEmployees[j].division.toString()
-      ) {
-        arr.push({ _id: allEmployees[j]._id.toString() });
-      }
-    }
-    mainArr.push(arr);
-  }
-
-  return mainArr;
-}
-
 const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
 const randomSalary = () => Math.floor(Math.random() * (60 - 20 + 1) + 20);
 
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
   let divisions = await DivisionModel.find();
+
   const employees = names.map((name) => {
     let randomSalaryNum = randomSalary();
     return {
@@ -63,12 +45,33 @@ const populateEmployees = async () => {
       current_salary: randomSalaryNum,
       favourite_color: pick(colors),
       desired_salary: randomSalaryNum + 10 <= 60 ? randomSalaryNum + 10 : 60,
-      division: pick(divisions)._id,
+      division: pick(divisions),
+    };
+  });
+  await EmployeeModel.create(...employees);
+
+  console.log("Employees created");
+};
+
+const populateDivision = async () => {
+  await DivisionModel.deleteMany({});
+
+  const boss = await EmployeeModel.find({ position: "Director" });
+
+  const divisions = division.map((name, index) => {
+    return {
+      name,
+      boss: pick(boss),
+      budget: randomSalary(),
+      location: {
+        city: pick(cities),
+        country: "Hungary",
+      },
     };
   });
 
-  await EmployeeModel.create(...employees);
-  console.log("Employees created");
+  await DivisionModel.create(...divisions);
+  console.log("Divisions created");
 };
 
 const populateEquipment = async () => {
@@ -82,26 +85,6 @@ const populateEquipment = async () => {
   console.log("Equipments created");
 };
 
-const populateDivision = async (EmployeeIds) => {
-  await DivisionModel.deleteMany({});
-  let boss = await EmployeeModel.find({ position: "Director" });
-  const divisions = division.map((name, index) => {
-    return {
-      name,
-      boss: pick(boss)._id,
-      budget: randomSalary(),
-      location: {
-        city: pick(cities),
-        country: "Hungary",
-      },
-      employees: [...EmployeeIds[index]],
-    };
-  });
-
-  await DivisionModel.create(...divisions);
-  console.log("Divisions created");
-};
-
 const populateTools = async () => {
   await ToolModel.deleteMany({});
   await ToolModel.create([
@@ -113,13 +96,33 @@ const populateTools = async () => {
   console.log("Tools created");
 };
 
+const repairFunction = async () => {
+  const employees = await EmployeeModel.find();
+  employees.map(async (emp) => {
+    await DivisionModel.findOneAndUpdate(
+      { _id: emp.division },
+      { $push: { employees: emp._id } }
+    );
+  });
+  const divisions = await DivisionModel.find();
+  const boss = await EmployeeModel.find({ position: "Director" });
+  divisions.map(async (division) => {
+    await DivisionModel.findOneAndUpdate(
+      { _id: division._id },
+      { boss: pick(boss) }
+    );
+  });
+};
+
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
-  await populateDivision(await findEmployeesDivision());
+  await populateDivision();
   await populateEmployees();
   await populateEquipment();
   await populateTools();
+
+  await repairFunction();
   await mongoose.disconnect();
 };
 
