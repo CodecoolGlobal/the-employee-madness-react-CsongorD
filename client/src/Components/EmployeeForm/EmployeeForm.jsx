@@ -32,15 +32,25 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
     });
     setDivisions(arr);
   }
+  const [games, setGames] = useState(null);
+  async function fetchGames() {
+    const response = await fetch("/api/games/");
+    const data = await response.json();
+    const arr = data.map((x) => {
+      return { value: x._id, label: x.name };
+    });
+    setGames(arr);
+  }
 
   useEffect(() => {
     fetchEquipments();
     fetchDivisions();
+    fetchGames();
   }, []);
 
   const namesArr = equipmentNames ? equipmentNames : null;
   const divisionArr = divisions ? divisions : null;
-
+  const gameArr = games ? games : null;
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       {employee && (
@@ -116,7 +126,10 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
         <label htmlFor="desired_salary">Division</label>
         <Select options={divisionArr} name="division" />
       </div>
-
+      <div className="control">
+        <label htmlFor="board_game">Board Game</label>
+        <Select options={gameArr} name="board_game" />
+      </div>
       <div className="buttons">
         <button type="submit" disabled={disabled}>
           {employee ? "Update Employee" : "Create Employee"}

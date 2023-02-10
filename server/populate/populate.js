@@ -18,6 +18,7 @@ const EmployeeModel = require("../db/employee.model");
 const EquipmentModel = require("../db/equipment.model");
 const DivisionModel = require("../db/division.model");
 const ToolModel = require("../db/tool.model");
+const GameModel = require("../db/game.model");
 
 const mongoUrl = process.env.MONGO_URL;
 
@@ -96,6 +97,25 @@ const populateTools = async () => {
   console.log("Tools created");
 };
 
+const populateGames = async () => {
+  await GameModel.deleteMany({});
+  await GameModel.create([
+    {
+      name: "Monopoly",
+      maxPlayers: 8,
+    },
+    {
+      name: "Chess",
+      maxPlayers: 2,
+    },
+    {
+      name: "Go",
+      maxPlayers: 2,
+    },
+  ]);
+  console.log("Games created");
+};
+
 const repairFunction = async () => {
   const employees = await EmployeeModel.find();
   employees.map(async (emp) => {
@@ -121,6 +141,7 @@ const main = async () => {
   await populateEmployees();
   await populateEquipment();
   await populateTools();
+  await populateGames();
   await repairFunction();
   await mongoose.disconnect();
 };

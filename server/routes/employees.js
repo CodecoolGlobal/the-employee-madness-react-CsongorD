@@ -26,6 +26,7 @@ router
     const employees = await EmployeeModel.find().populate([
       "division",
       "kittens",
+      "board_game",
     ]);
 
     return res.json(employees);
