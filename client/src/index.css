@@ -179,3 +179,18 @@ form button {
   height: 20px;
   width: 100%;
 }
+.KittenForm {
+  display: flex;
+}
+.KittenForm input,label {
+  width: 200px;
+}
+.KittenForm .control {
+
+  width: 250px;
+  padding: 5px;
+}
+.KittenForm .buttons{
+  display: flex;
+  padding: 5px;
+}
