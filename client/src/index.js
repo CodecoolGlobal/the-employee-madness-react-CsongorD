@@ -14,6 +14,7 @@ import Robert from "./Pages/Robert";
 import Missing from "./Pages/Missing";
 import Toppaid from "./Pages/Toppaid";
 import Kitten from "./Pages/Kittens";
+import GamesCreator from "./Pages/GamesCreator";
 
 import EquipmentList from "./Pages/EquipmentList";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
       {
         path: "/kittens/:id",
         element: <Kitten />,
+      },
+      {
+        path: "/games",
+        element: <GamesCreator />,
       },
     ],
   },

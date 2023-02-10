@@ -25,6 +25,7 @@ const EmployeeSchema = new Schema({
       ref: "Kitten",
     },
   ],
+  board_game: { type: mongoose.Schema.Types.ObjectId, ref: "Game" },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
