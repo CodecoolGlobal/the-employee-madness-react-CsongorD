@@ -121,7 +121,6 @@ const main = async () => {
   await populateEmployees();
   await populateEquipment();
   await populateTools();
-
   await repairFunction();
   await mongoose.disconnect();
 };

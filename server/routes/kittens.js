@@ -1,42 +1,38 @@
 const express = require("express");
-const DivisionModel = require("../db/division.model");
 const router = express.Router();
+const KittenModel = require("../db/kitten.model");
 const EmployeeModel = require("../db/employee.model");
-
 router.use("/:id", async (req, res, next) => {
-  let employee = null;
+  let kitten = null;
 
   try {
-    employee = await EmployeeModel.findById(req.params.id).populate("kittens");
+    kitten = await KittenModel.findById(req.params.id);
   } catch (err) {
     return next(err);
   }
-
-  if (!employee) {
-    return res.status(404).end("Employee not found");
+  if (!kitten) {
+    return res.status(404).end("Kitten not found");
   }
 
-  req.employee = employee;
+  req.kitten = kitten;
+
   next();
 });
 
 router
   .route("/")
   .get(async (req, res) => {
-    const employees = await EmployeeModel.find().populate([
-      "division",
-      "kittens",
-    ]);
-
-    return res.json(employees);
+    const kittens = await KittenModel.find();
+    return res.json(kittens);
   })
   .post(async (req, res, next) => {
-    const employee = req.body;
+    const kitten = req.body;
     try {
-      const saved = await EmployeeModel.create(employee);
-      await DivisionModel.findOneAndUpdate(
-        { _id: saved.division },
-        { $push: { employees: saved._id } }
+      const saved = await KittenModel.create(kitten);
+      console.log(saved);
+      await EmployeeModel.findOneAndUpdate(
+        { _id: saved.employee },
+        { $push: { kittens: saved._id } }
       );
       return res.json(saved);
     } catch (err) {
@@ -47,13 +43,13 @@ router
 router
   .route("/:id")
   .get((req, res) => {
-    return res.json(req.employee);
+    return res.json(req.kitten);
   })
   .patch(async (req, res, next) => {
-    const employee = req.body;
+    const kitten = req.body;
 
     try {
-      const updated = await req.employee.set(employee).save();
+      const updated = await req.kitten.set(kitten).save();
       return res.json(updated);
     } catch (err) {
       return next(err);
@@ -61,7 +57,7 @@ router
   })
   .delete(async (req, res, next) => {
     try {
-      const deleted = await req.employee.delete();
+      const deleted = await req.kitten.delete();
       return res.json(deleted);
     } catch (err) {
       return next(err);

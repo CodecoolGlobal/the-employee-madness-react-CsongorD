@@ -19,6 +19,12 @@ const EmployeeSchema = new Schema({
   favourite_color: String,
   desired_salary: Number,
   division: { type: mongoose.Schema.Types.ObjectId, ref: "Division" },
+  kittens: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Kitten",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

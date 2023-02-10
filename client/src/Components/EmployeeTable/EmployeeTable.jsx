@@ -1,9 +1,10 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Pagination } from "react-pagination-bar";
 import "react-pagination-bar/dist/index.css";
 import "./EmployeeTable.css";
-import React from "react";
+
 import Popup from "reactjs-popup";
 import DeletePopup from "../DeletePopup";
 
@@ -19,7 +20,6 @@ const EmployeeTable = ({ employees, onDelete }) => {
   useEffect(() => {
     setEmployeeData(employees);
   }, [employees]);
-
   let filteredEmployees = employeeData.filter((employee) =>
     employee.position.includes(value) || employee.level.includes(value)
       ? employee
@@ -169,6 +169,12 @@ const EmployeeTable = ({ employees, onDelete }) => {
                       </div>
                     )}
                   </Popup>
+                  <Link
+                    to={`/kittens/${employee._id}`}
+                    state={{ id: employee._id }}
+                  >
+                    <button type="button">Kittens</button>
+                  </Link>
                 </td>
               </tr>
             ))}

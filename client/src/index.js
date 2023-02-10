@@ -13,6 +13,7 @@ import EmployeeUpdater from "./Pages/EmployeeUpdater";
 import Robert from "./Pages/Robert";
 import Missing from "./Pages/Missing";
 import Toppaid from "./Pages/Toppaid";
+import Kitten from "./Pages/Kittens";
 
 import EquipmentList from "./Pages/EquipmentList";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
@@ -108,6 +109,10 @@ const router = createBrowserRouter([
             <ToolList />,
           </>
         ),
+      },
+      {
+        path: "/kittens/:id",
+        element: <Kitten />,
       },
     ],
   },
