@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Loading from "../Components/Loading";
 
 const fetchEmployees = (signal, id) => {
@@ -17,40 +17,15 @@ const createKitten = (kitten) => {
 };
 
 const Kitten = () => {
+  let location = useLocation();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
-  const navigate = useNavigate();
-  let location = useLocation();
-  let id = location.state?.id;
+  const id = location.state?.id;
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const entries = [...formData.entries()];
+  useEffect(() => {
+    fetchData();
+  }, [data]);
 
-    const kitten = entries.reduce((acc, entry) => {
-      const [k, v] = entry;
-      acc[k] = v;
-      return acc;
-    }, {});
-    return handleCreateKitten({ ...kitten, ...{ employee: id } });
-  };
-
-  const handleCreateKitten = (kitten) => {
-    setLoading(true);
-
-    createKitten(kitten)
-      .then(() => {
-        fetchData();
-        navigate(`/kittens/${id}`);
-      })
-      .catch((err) => {
-        throw err;
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
   function fetchData() {
     const controller = new AbortController();
     fetchEmployees(controller.signal, id)
@@ -67,9 +42,30 @@ const Kitten = () => {
 
     return () => controller.abort();
   }
-  useEffect(() => {
-    fetchData();
-  }, []);
+
+  const handleCreateKitten = (kitten) => {
+    setLoading(true);
+
+    createKitten(kitten)
+      .then(() => {})
+      .catch((err) => {
+        throw err;
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const entries = [...formData.entries()];
+    const kitten = entries.reduce((acc, entry) => {
+      const [k, v] = entry;
+      acc[k] = v;
+      return acc;
+    }, {});
+    return handleCreateKitten({ ...kitten, ...{ employee: id } });
+  };
 
   if (loading) {
     return <Loading />;

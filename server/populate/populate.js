@@ -19,6 +19,7 @@ const EquipmentModel = require("../db/equipment.model");
 const DivisionModel = require("../db/division.model");
 const ToolModel = require("../db/tool.model");
 const GameModel = require("../db/game.model");
+const KittenModel = require("../db/kitten.model");
 
 const mongoUrl = process.env.MONGO_URL;
 
@@ -142,6 +143,8 @@ const main = async () => {
   await populateEquipment();
   await populateTools();
   await populateGames();
+
+  //await KittenModel.deleteMany({});
   await repairFunction();
   await mongoose.disconnect();
 };
