@@ -29,7 +29,6 @@ router
     const kitten = req.body;
     try {
       const saved = await KittenModel.create(kitten);
-      console.log(saved);
       await EmployeeModel.findOneAndUpdate(
         { _id: saved.employee },
         { $push: { kittens: saved._id } }
