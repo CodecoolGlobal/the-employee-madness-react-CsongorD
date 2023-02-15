@@ -84,22 +84,7 @@ const ToolTable = ({ tool, onDelete }) => {
                   <Link to={`/updateTool/${tool._id}`}>
                     <button type="button">Update</button>
                   </Link>
-                  <Popup
-                    trigger={<button type="button">Delete</button>}
-                    modal={true}
-                    position="top center"
-                  >
-                    {(close) => (
-                      <div>
-                        <DeletePopup
-                          onDelete={onDelete}
-                          id={tool._id}
-                          onClose={close}
-                          name="Tool"
-                        />
-                      </div>
-                    )}
-                  </Popup>
+                  <button onClick={() => onDelete(tool._id)}>Delete</button>
                 </td>
               </tr>
             ))}

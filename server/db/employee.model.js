@@ -26,6 +26,7 @@ const EmployeeSchema = new Schema({
     },
   ],
   board_game: { type: mongoose.Schema.Types.ObjectId, ref: "Game" },
+  height: Number,
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

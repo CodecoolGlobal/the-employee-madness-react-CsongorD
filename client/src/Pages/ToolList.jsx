@@ -17,10 +17,12 @@ const ToolList = () => {
   const [data, setData] = useState(null);
 
   const handleDelete = (id) => {
-    deleteTool(id).catch((err) => console.log(err));
-    setData((tools) => {
-      return tools.filter((tool) => tool._id !== id);
-    });
+    if (window.confirm("Are you sure you want to delete this tool?")) {
+      deleteTool(id).catch((err) => console.log(err));
+      setData((tools) => {
+        return tools.filter((tool) => tool._id !== id);
+      });
+    }
   };
   useEffect(() => {
     const controller = new AbortController();

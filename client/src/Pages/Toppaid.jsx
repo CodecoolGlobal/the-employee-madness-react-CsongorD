@@ -29,10 +29,11 @@ const Toppaid = () => {
     const controller = new AbortController();
     fetchEmployees(controller.signal)
       .then((employees) => {
-        let employeesToppaid = employees.sort((a, b) => a.current_salary - b.current_salary);
-        console.log(employeesToppaid);
+        let employeesToppaid = employees.sort(
+          (a, b) => b.current_salary - a.current_salary
+        );
         setLoading(false);
-        setData(employeesToppaid.splice(-3));
+        setData(employeesToppaid.slice(0, 3));
       })
       .catch((error) => {
         if (error.name !== "AbortError") {

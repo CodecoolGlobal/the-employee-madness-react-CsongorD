@@ -29,11 +29,11 @@ const Missing = () => {
     const controller = new AbortController();
     fetchEmployees(controller.signal)
       .then((employees) => {
-        let employeesRobert = employees.filter((employee) =>
+        let employeesMissing = employees.filter((employee) =>
           employee.present ? 0 : employee
         );
         setLoading(false);
-        setData(employeesRobert);
+        setData(employeesMissing);
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
