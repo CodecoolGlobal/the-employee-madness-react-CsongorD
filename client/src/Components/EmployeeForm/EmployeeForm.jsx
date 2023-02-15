@@ -130,6 +130,15 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
         <label htmlFor="board_game">Board Game</label>
         <Select options={gameArr} name="board_game" />
       </div>
+      <div className="control">
+        <label htmlFor="height">Height</label>
+        <input
+          type="number"
+          defaultValue={employee ? employee.height : null}
+          name="height"
+          id="height"
+        />
+      </div>
       <div className="buttons">
         <button type="submit" disabled={disabled}>
           {employee ? "Update Employee" : "Create Employee"}

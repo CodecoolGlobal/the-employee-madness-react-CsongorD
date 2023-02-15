@@ -109,6 +109,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <th>Favourite Color</th>
             <th>Division</th>
             <th>Board Game</th>
+            <th>Height</th>
             <th />
           </tr>
         </thead>
@@ -151,6 +152,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
                 </td>
                 <td>{employee.division?.name}</td>
                 <td>{employee.board_game?.maxPlayers}</td>
+                <td>{employee.height}</td>
                 <td>
                   <Link to={`/updateEmployee/${employee._id}`}>
                     <button type="button">Update</button>

@@ -31,6 +31,8 @@ if (!mongoUrl) {
 const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
 const randomSalary = () => Math.floor(Math.random() * (60 - 20 + 1) + 20);
 
+const randomHeight = () => Math.floor(Math.random() * (180 - 90 + 1) + 90);
+
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
   let divisions = await DivisionModel.find();
@@ -48,6 +50,7 @@ const populateEmployees = async () => {
       favourite_color: pick(colors),
       desired_salary: randomSalaryNum + 10 <= 60 ? randomSalaryNum + 10 : 60,
       division: pick(divisions),
+      height: randomHeight(),
     };
   });
   await EmployeeModel.create(...employees);
